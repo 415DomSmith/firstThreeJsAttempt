@@ -109,7 +109,7 @@ function init (){
 
 //sets starting camera position
 	camera = new THREE.PerspectiveCamera(50, WIDTH / HEIGHT, 0.1, 20000); 
-	camera.position.set(150,10000,120);
+	camera.position.set(150,50,120);
 	scene.add(camera);
 
 	var light = new THREE.PointLight(0xffffff); //creates light with hex color
