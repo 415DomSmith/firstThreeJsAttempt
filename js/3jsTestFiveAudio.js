@@ -1,6 +1,6 @@
 
 
-//WEB AUDIO FUCKTHISSHIT
+//WEB AUDIO 
 
 //variables
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -49,19 +49,15 @@ function getData() {
    		sourceJS.onaudioprocess = function(audioEvent) {		
 				var inputBuffer = audioEvent.inputBuffer
 				var outputBuffer = audioEvent.outputBuffer;
-				//for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+				
 				inputData = inputBuffer.getChannelData(inputBuffer);
 				analyser.getByteFrequencyData(inputData);
 
-				// for(var i = 0; i < inputData.length; i++){
-				// 	boost += inputData[i];
-				// }
 				
-		   val1 = inputData[100] * 10//Math.floor();
+				
+		   val1 = inputData[100] * 10
 		   val2 = inputData[333] * 10
-		   //frequencyData.push(val1);
-		   //val2+= Math.floor(inputData[0]);
-			//console.log(val1);
+		 
 			};         
   },
 
@@ -116,23 +112,6 @@ function init (){
 	light.position.set(0, 50, 30); //sets lights position
 	scene.add(light);
 
-
-// for (var ii = 0; ii< 30; i++){
-// 	whiteKeyArr[ii]= 'whiteKey' + ii;
-// }
-
-// for(var i = 0; i < 90; i+= 3){ //loops to make 30 white rectangles
-// 	whiteKeyArr[i]= 'whiteKey' + i;
-// 	var whiteKeyGeometry = new THREE.BoxGeometry(2,2,10); //contains all the points(vertices) and fill(faces) of the cube
-// 	var whiteKeyMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff}); //(material and color in hex, lambert can cast shadows.)
-// 	whiteKey = new THREE.Mesh( whiteKeyGeometry, whiteKeyMaterial);
-// 	whiteKey.castShadow = true;
-// 	whiteKey.position.x = i;
-
-
-// 	scene.add(whiteKey)
-// }
-
 whiteKey = [];
 
 var i = 0;
@@ -156,13 +135,8 @@ for(var y = 0; y < 90; y += 3) {
         scene.add(whiteKey[i][j]);
         j++;
     }
-    i++;
-    
+    i++;  
 }
-
-
-
-
 
 for(var k = 0; k < 87; k+=3){ //loops to make 29 black smaller rectangles
 	var blackKeyGeometry = new THREE.BoxGeometry(1,2,8); //contains all the points(vertices) and fill(faces) of the cube
@@ -194,7 +168,6 @@ lineGeometry.vertices.push(//controls line building using conneting line segment
 	);
 var line = new THREE.Line( lineGeometry, lineMaterial);
 line.position.y = 60;
-//line.position.z = -10;
 line.position.x = 41;
 scene.add(line);
 
@@ -218,7 +191,6 @@ scene.add( plane );
 //3D text
 var textGeometry = new THREE.TextGeometry('gSchool Rocks!', {size:10, height:10} );
 textMaterial = new THREE.MeshLambertMaterial({color: 0xff9000});
-//textMaterial.color.setHSL( .2, .5, .3 );
 text = new THREE.Mesh( textGeometry, textMaterial);
 
 text.position.x = -100;
@@ -292,14 +264,12 @@ datGUI.add(guiControls, 'rotationX', 0, 1);
 	});
 }
 
-//var counter = 0;
 //animate function is what makes everything move, and it calls itself through the built in requestAnimationFrame function 60x a second
 function animate(){
 	var time = Date.now() * 0.00005;
 	requestAnimationFrame(animate);
 	sphere.rotation.y += guiControls.rotationY
 	text.rotation.x += guiControls.rotationX
-	//whiteKey.position.z = frequencyData.length + 1;
 
 	//animation and color control for the particles! ripped and tweaked from  http://threejs.org/examples/webgl_particles_random.html
 	for ( i = 0; i < scene.children.length; i ++ ) {
@@ -314,23 +284,15 @@ function animate(){
 		h = ( 360 * ( color[0] + time ) % 360 ) / 360;
 		materials[i].color.setHSL( h, color[1], color[2] );
 	}
-
-	//animation control for the keys!
-		//if (counter === 10){
 			
 			if(val1 > 1.5){
-				
 				textMaterial.color.setHSL( val1 - 1, .5, .3 );
-				//sphere.material.color.setHSL(val2 -1, .5, .3);	
+		
 			}
 			if (val2 > 1.3){
-				//console.log(val2);
 				for(var x = 0; x < whiteKey.length; x++){
 					for(var y = 0; y < whiteKey.length; y+=2){
-						//for(var z = 0; y < whiteKey.length; z+=3){
 							whiteKey[x][y].material.color.setHSL ( val1, .5, .3 );
-							//whiteKey[x][z].material.color.setHSL ( val1, .5, .3 );
-							//whiteKey[x][y].material.color.setHSL ( val1, .5, .3 );
 							whiteKey[x][y].position.z += val2;
 							whiteKey[x][y].position.y += - val2 + 1;
 
@@ -338,21 +300,10 @@ function animate(){
 							whiteKey[x][y].position.z = 0;
 							whiteKey[x][y].position.y = 0;
 							}
-						//}	
 					}
 				}
 			}
-				// whiteKey[x][x + 1].material.color.setHSL ( val1, .5, .3 );			
-				
-				
-				//counter = 0;
-			//}
-			
-			//frequencyData = [];
-			
-	//}
 
-	//counter++;
 	renderer.render(scene, camera);
 	controls.update();
 }
@@ -361,7 +312,3 @@ function animate(){
 
 init(); //defines the scene and renderer, appends renderer to the body, and sets camera position
 animate();//calls the animate function, which calls itself 60 times a second
-console.log(whiteKey);
-//setTimeout( function() {
-
-//} , 10000); //plays the music
